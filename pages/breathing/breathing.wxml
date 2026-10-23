@@ -1,0 +1,42 @@
+<view class="page">
+  <view class="circle-wrap">
+    <view class="halo" style="transform: scale({{scale}});">
+      <view class="core">
+        <view class="phase">{{phaseName}}</view>
+        <view class="count" wx:if="{{phaseCount}}">{{phaseCount}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="status">{{statusText}}</view>
+  <view class="cycles" wx:if="{{state === 'running' || state === 'paused'}}">第 {{cycles + 1}} 轮</view>
+
+  <block wx:if="{{state === 'idle' || state === 'done'}}">
+    <view class="section">
+      <view class="label">节奏</view>
+      <view class="chips">
+        <view wx:for="{{patterns}}" wx:key="id"
+              class="chip {{item.id === patternId ? 'chip-on' : ''}}"
+              data-id="{{item.id}}" bindtap="setPattern">{{item.name}}</view>
+      </view>
+    </view>
+    <view class="section">
+      <view class="label">时长 · 分钟</view>
+      <view class="chips">
+        <view wx:for="{{minutesOptions}}" wx:key="*this"
+              class="chip {{item === totalMin ? 'chip-on' : ''}}"
+              data-min="{{item}}" bindtap="setMinutes">{{item}}</view>
+      </view>
+    </view>
+  </block>
+
+  <view class="controls">
+    <button wx:if="{{state === 'idle'}}" class="btn primary" bindtap="start">开 始</button>
+    <button wx:if="{{state === 'done'}}" class="btn primary" bindtap="start">再来一轮</button>
+    <button wx:if="{{state === 'running'}}" class="btn" bindtap="pause">暂 停</button>
+    <button wx:if="{{state === 'paused'}}" class="btn primary" bindtap="resume">继 续</button>
+    <button wx:if="{{state === 'running' || state === 'paused'}}" class="btn ghost" bindtap="reset">结 束</button>
+  </view>
+
+  <view class="hint">吸气时圆环放大 · 呼气时圆环回落 · 交界处一声木鱼</view>
+</view>
