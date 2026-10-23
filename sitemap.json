@@ -1,0 +1,4 @@
+{
+  "desc": "meditation-timer sitemap",
+  "rules": [{ "action": "allow", "page": "*" }]
+}
