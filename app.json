@@ -1,0 +1,19 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/breathing/breathing"
+  ],
+  "window": {
+    "navigationBarTitleText": "静心计时",
+    "navigationBarBackgroundColor": "#16211b",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#101613",
+    "backgroundTextStyle": "dark"
+  },
+  "requiredBackgroundModes": [
+    "audio"
+  ],
+  "sitemapLocation": "sitemap.json",
+  "style": "v2",
+  "lazyCodeLoading": "requiredComponents"
+}
