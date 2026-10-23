@@ -1,0 +1,15 @@
+{
+  "description": "冥想计时器 - 微信小程序版",
+  "appid": "touristappid",
+  "projectname": "meditation-timer",
+  "compileType": "miniprogram",
+  "libVersion": "3.4.0",
+  "setting": {
+    "es6": true,
+    "enhance": true,
+    "postcss": true,
+    "minified": true,
+    "coverView": true
+  },
+  "condition": {}
+}
