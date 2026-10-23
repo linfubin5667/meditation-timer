@@ -1,0 +1,77 @@
+<view class="page">
+  <view class="ring-wrap">
+    <view class="ring" style="background: conic-gradient(#a7c4a0 {{progressDeg}}deg, #243129 {{progressDeg}}deg);">
+      <view class="ring-inner">
+        <view class="time">{{remainText}}</view>
+        <view class="status" wx:if="{{phaseText}}">{{phaseText}}</view>
+        <view class="status">{{statusText}}</view>
+      </view>
+    </view>
+  </view>
+
+  <block wx:if="{{state === 'idle' || state === 'done'}}">
+    <view class="entry" bindtap="goBreathing">
+      <text class="entry-title">呼吸引导</text>
+      <text class="entry-desc">4-7-8 · 盒式呼吸 · 跟着圆环一呼一吸</text>
+      <text class="entry-arrow">›</text>
+    </view>
+
+    <view class="section">
+      <view class="label">结构</view>
+      <view class="chips">
+        <view wx:for="{{structures}}" wx:key="id"
+              class="chip {{item.id === structureId ? 'chip-on' : ''}}"
+              data-id="{{item.id}}" bindtap="setStructure">{{item.name}}</view>
+      </view>
+      <view class="struct-desc" wx:if="{{structureId !== 'single'}}">{{structures[structureId === 'zen-short' ? 1 : 2].desc}} · 阶段交界双磬</view>
+    </view>
+
+    <view class="section" wx:if="{{structureId === 'single'}}">
+      <view class="label">时长 · 分钟</view>
+      <view class="chips">
+        <view wx:for="{{durations}}" wx:key="*this"
+              class="chip {{item === durationMin ? 'chip-on' : ''}}"
+              data-min="{{item}}" bindtap="setDuration">{{item}}</view>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="label">间隔磬声 · 分钟</view>
+      <view class="chips">
+        <view wx:for="{{intervals}}" wx:key="*this"
+              class="chip {{item === intervalMin ? 'chip-on' : ''}}"
+              data-min="{{item}}" bindtap="setIntervalOption">{{item === 0 ? '关' : item}}</view>
+      </view>
+    </view>
+
+    <view class="row">
+      <text class="row-label">练习时保持屏幕常亮</text>
+      <switch checked="{{keepScreenOn}}" bindchange="toggleKeepScreenOn" color="#7fa877" />
+    </view>
+
+    <view class="stats" wx:if="{{stats && stats.sessions > 0}}">
+      <view class="stats-main">今日 {{stats.todayMin}} 分钟 · 连续 {{stats.streak}} 天 · 累计 {{totalText}}</view>
+      <view class="stats-days">
+        <view wx:for="{{stats.last7}}" wx:key="date" class="day">
+          <view class="dot {{item.minutes > 0 ? 'dot-on' : ''}}"></view>
+          <view class="day-min">{{item.minutes > 0 ? item.minutes : '·'}}</view>
+        </view>
+      </view>
+      <view class="stats-note">最近 7 天</view>
+    </view>
+  </block>
+
+  <block wx:if="{{state === 'running' || state === 'paused'}}">
+    <view class="summary">{{phaseText}} · 间隔磬声 {{intervalMin === 0 ? '关' : intervalMin + ' 分钟'}}</view>
+  </block>
+
+  <view class="controls">
+    <button wx:if="{{state === 'idle'}}" class="btn primary" bindtap="start">开 始</button>
+    <button wx:if="{{state === 'done'}}" class="btn primary" bindtap="start">再来一次</button>
+    <button wx:if="{{state === 'running'}}" class="btn" bindtap="pause">暂 停</button>
+    <button wx:if="{{state === 'paused'}}" class="btn primary" bindtap="resume">继 续</button>
+    <button wx:if="{{state === 'running' || state === 'paused'}}" class="btn ghost" bindtap="reset">结 束</button>
+  </view>
+
+  <view class="hint">锁屏后磬声仍会响起 · 开始一磬 / 间隔轻磬 / 交界双磬 / 结束三磬</view>
+</view>
